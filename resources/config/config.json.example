@@ -1,0 +1,26 @@
+{
+    "client": {
+        "name": "",
+        "code": ""
+    },
+    "backup": {
+        "local_path": "",
+        "extensions": [
+            "zip",
+            "bak"
+        ]
+    },
+    "winscp": {
+        "executable": "C:\\Program Files (x86)\\WinSCP\\WinSCP.com"
+    },
+    "sftp": {
+        "retry_attempts": 3,
+        "retry_delay": 5
+    },
+    "logs": {
+        "path": "resources/logs"
+    },
+    "scheduler": {
+        "interval_seconds": 300
+    }
+}

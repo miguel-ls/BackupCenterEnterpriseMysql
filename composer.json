@@ -1,0 +1,25 @@
+{
+    "name": "codesicorp/backup-center-enterprise",
+    "description": "Backup Center Enterprise",
+    "type": "project",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "BackupCenter\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Miguel Lopez",
+            "email": "mlopez@mgsa.com.pe"
+        }
+    ],
+    "require": {
+        "dragonmantank/cron-expression": "^3.6",
+        "pragmarx/google2fa": "^9.0",
+        "endroid/qr-code": "^6.0",
+        "dompdf/dompdf": "^3.1",
+        "phpoffice/phpspreadsheet": "^5.9",
+        "bacon/bacon-qr-code": "^3.1"
+    }
+}

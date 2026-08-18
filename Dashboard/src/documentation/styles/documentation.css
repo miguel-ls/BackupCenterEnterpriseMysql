@@ -1,0 +1,29 @@
+.documentation {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.documentation h1 {
+    scroll-margin-top: 90px;
+}
+
+.documentation h2 {
+    scroll-margin-top: 90px;
+}
+
+.documentation h3 {
+    scroll-margin-top: 90px;
+}
+
+.documentation pre {
+    overflow-x: auto;
+}
+
+.documentation img {
+    border-radius: 12px;
+}
+
+.documentation table {
+    width: 100%;
+    border-collapse: collapse;
+}

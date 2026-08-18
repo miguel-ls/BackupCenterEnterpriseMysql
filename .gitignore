@@ -1,0 +1,37 @@
+# PHP / Composer
+/vendor/
+
+# JavaScript dependencies and generated dashboard assets
+/node_modules/
+/Dashboard/node_modules/
+/Dashboard/dist/
+/Dashboard/.vite/
+
+# Local environment and application configuration (may contain credentials)
+/.env
+/.env.*
+!/.env.example
+/resources/config/config.json
+
+# Runtime state: database, logs and service caches are generated locally
+/storage/database/*.db
+/storage/logs/*.log
+/storage/temp/*.json
+/resources/logs/
+
+# Generated diagnostics and test output
+/public/api/*.log
+/public/api/test_queue.txt
+
+# Tooling caches and local IDE settings
+/.phpunit.cache/
+/.eslintcache
+/.idea/
+
+.codeserver/
+supervisord.log
+supervisord.pid
+
+# Dashboard compilado
+/public/assets/
+/public/index.html

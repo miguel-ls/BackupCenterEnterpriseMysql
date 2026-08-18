@@ -1,0 +1,13 @@
+export { default as DocAlert } from './DocAlert.vue';
+export { default as DocBreadcrumb } from './DocBreadcrumb.vue';
+export { default as DocCard } from './DocCard.vue';
+export { default as DocCode } from './DocCode.vue';
+export { default as DocFooter } from './DocFooter.vue';
+export { default as DocHeader } from './DocHeader.vue';
+export { default as DocImage } from './DocImage.vue';
+export { default as DocNavigation } from './DocNavigation.vue';
+export { default as DocSection } from './DocSection.vue';
+export { default as DocSidebar } from './DocSidebar.vue';
+export { default as DocTable } from './DocTable.vue';
+export { default as DocTabs } from './DocTabs.vue';
+export { default as DocTitle } from './DocTitle.vue';
