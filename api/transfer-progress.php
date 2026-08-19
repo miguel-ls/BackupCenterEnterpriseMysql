@@ -25,31 +25,40 @@ try {
         throw new Exception('Missing required fields');
     }
 
-    $stmt = $db->prepare("
+    $stmt = $pdo->prepare("
         INSERT INTO transfer_progress (
             job_id,
-            filename,
-            progress,
+            file_name,
+            total_bytes,
+            uploaded_bytes,
+            speed,
             status,
             updated_at
-        ) VALUES (
+        )
+        VALUES (
             :job_id,
-            :filename,
-            :progress,
+            :file_name,
+            :total_bytes,
+            :uploaded_bytes,
+            :speed,
             :status,
             NOW()
         )
         ON DUPLICATE KEY UPDATE
-            progress = VALUES(progress),
+            total_bytes = VALUES(total_bytes),
+            uploaded_bytes = VALUES(uploaded_bytes),
+            speed = VALUES(speed),
             status = VALUES(status),
             updated_at = NOW()
     ");
 
     $stmt->execute([
-        ':job_id'   => $jobId,
-        ':filename' => $filename,
-        ':progress' => $progress,
-        ':status'   => $status
+        ':job_id'         => $jobId,
+        ':file_name'      => $fileName,
+        ':total_bytes'    => $total,
+        ':uploaded_bytes' => $uploaded,
+        ':speed'          => $speed,
+        ':status'         => $status
     ]);
 
     echo json_encode([
