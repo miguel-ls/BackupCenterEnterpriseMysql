@@ -195,11 +195,12 @@ public function saveExecutionHistory(array $data): void
 
     try
     {
+        $startedAt  = $this->normalizeDate($data['startedAt']);
+        $finishedAt = $this->normalizeDate($data['finishedAt']);
+
         //  SOLO controlar el INSERT 
         if ((int)$data['filesFound'] !== (int)$data['filesSkipped']) {
 
-            $startedAt  = normalizeDate($data['startedAt']);
-            $finishedAt = normalizeDate($data['finishedAt']);
 
             $stmt = $this->pdo->prepare("
                 INSERT INTO execution_history
