@@ -177,7 +177,7 @@ try {
                 'SUCCESS',
                 :title,
                 :message,
-                datetime('now')
+                NOW()
             )
         ")->execute([
             ':title'   => 'Backup completado',
@@ -198,7 +198,7 @@ try {
                 'ERROR',
                 :title,
                 :message,
-                datetime('now')
+                NOW()
             )
         ")->execute([
             ':title'   => 'Error en backup',
