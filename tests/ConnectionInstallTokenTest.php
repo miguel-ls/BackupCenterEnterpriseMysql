@@ -5,12 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use BackupCenter\Core\Database;
 use BackupCenter\Repositories\ConnectionRepository;
 
-$dbPath = sys_get_temp_dir() . '/backupcenter-connection-install-token-test.sqlite';
-
-if (file_exists($dbPath)) {
-    unlink($dbPath);
-}
-
 $database = new Database();
 $repository = new ConnectionRepository($database);
 

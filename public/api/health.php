@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 require_once __DIR__ . '/bootstrap.php';
 
 use BackupCenter\Core\Application;
+use BackupCenter\Core\Database;
 use BackupCenter\Services\WindowsServiceMonitor;
 use BackupCenter\Core\Paths;
 
@@ -39,16 +40,19 @@ $checks[] = [
 
 /*
 |--------------------------------------------------------------------------
-| SQLite
+| MariaDB
 |--------------------------------------------------------------------------
 */
 
-
-$db = $db = new Database();
+try {
+    $dbOk = (new Database())->getConnection() instanceof \PDO;
+} catch (\Throwable $e) {
+    $dbOk = false;
+}
 
 $checks[] = [
-    "name"=>"SQLite",
-    "ok"=>file_exists($db)
+    "name"=>"MariaDB",
+    "ok"=>$dbOk
 ];
 
 /*

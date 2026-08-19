@@ -10,8 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     curl \
-    sqlite3 \
-    libsqlite3-dev \
+    default-mysql-client \
     libzip-dev \
     libicu-dev \
     libpng-dev \
@@ -22,7 +21,7 @@ RUN apt-get update && apt-get install -y \
         --with-jpeg \
     && docker-php-ext-install \
         pdo \
-        pdo_sqlite \
+        pdo_mysql \
         intl \
         zip \
         gd \

@@ -71,10 +71,6 @@ foreach ($last as $row) {
 
 }
 
-// if(!file_exists($db)){
-//     $data["alerts"][] = "Base de datos SQLite no encontrada";
-// }
-
 if($internet === false){
     $data["alerts"][] = "Sin conexión a Internet";
 }

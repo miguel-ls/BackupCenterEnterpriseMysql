@@ -27,12 +27,12 @@ if (version_compare(PHP_VERSION, '8.2.0', '<')) {
     echo "  [OK] PHP " . PHP_VERSION . PHP_EOL;
 }
 
-// SQLite
-if (!extension_loaded('pdo_sqlite')) {
-    echo "  [ERROR] Extensión pdo_sqlite no encontrada." . PHP_EOL;
+// MariaDB
+if (!extension_loaded('pdo_mysql')) {
+    echo "  [ERROR] Extensión pdo_mysql no encontrada." . PHP_EOL;
     $errors = true;
 } else {
-    echo "  [OK] pdo_sqlite habilitado." . PHP_EOL;
+    echo "  [OK] pdo_mysql habilitado." . PHP_EOL;
 }
 
 // WinSCP

@@ -14,8 +14,8 @@ class StatusCommand implements Command
 
         echo "PHP          : " . PHP_VERSION . PHP_EOL;
 
-        echo "SQLite       : "
-            . (extension_loaded('pdo_sqlite') ? "OK" : "ERROR")
+        echo "MariaDB      : "
+            . (extension_loaded('pdo_mysql') ? "OK" : "ERROR")
             . PHP_EOL;
 
         echo "WinSCP       : "
@@ -25,10 +25,6 @@ class StatusCommand implements Command
         echo "Config       : "
             . (file_exists(Paths::config() . '/config.json') ? "OK" : "ERROR")
             . PHP_EOL;
-
-        // echo "Database     : "
-        //     . (file_exists(Paths::database() . '/backupcenter.db') ? "OK" : "ERROR")
-        //     . PHP_EOL;
 
         echo "Logs         : "
             . (is_dir(Paths::logs()) ? "OK" : "ERROR")

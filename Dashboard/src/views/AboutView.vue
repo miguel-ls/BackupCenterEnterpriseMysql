@@ -70,7 +70,7 @@
 
                                 <tr class="border-b">
                                     <td class="py-2 font-semibold">Base de Datos</td>
-                                    <td>SQLite</td>
+                                    <td>MariaDB</td>
                                 </tr>
 
                                 <tr>

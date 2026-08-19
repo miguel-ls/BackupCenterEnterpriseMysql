@@ -19,8 +19,8 @@ class DoctorCommand implements Command
                 PHP_VERSION
             ],
             [
-                'SQLite',
-                extension_loaded('pdo_sqlite'),
+                'MariaDB',
+                extension_loaded('pdo_mysql'),
                 ''
             ],
             [
@@ -33,11 +33,6 @@ class DoctorCommand implements Command
                 file_exists(Paths::config() . '/config.json'),
                 ''
             ],
-            // [
-            //     'Database',
-            //     file_exists(Paths::database() . '/backupcenter.db'),
-            //     ''
-            // ],
             [
                 'Logs',
                 is_writable(Paths::logs()),
