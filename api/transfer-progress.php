@@ -17,15 +17,17 @@ try {
     }
 
     $jobId    = $input['job_id'] ?? null;
-    $filename = $input['filename'] ?? null;
-    $progress = $input['progress'] ?? 0;
+    $fileName = $input['file_name'] ?? null;
+    $uploaded = $input['uploaded_bytes'] ?? 0;
+    $total    = $input['total_bytes'] ?? 0;
+    $speed    = $input['speed'] ?? 0;
     $status   = $input['status'] ?? 'uploading';
 
-    if (!$jobId || !$filename) {
+    if (!$jobId || !$fileName) {
         throw new Exception('Missing required fields');
     }
 
-    $stmt = $pdo->prepare("
+    $stmt = $db->prepare("
         INSERT INTO transfer_progress (
             job_id,
             file_name,
@@ -34,8 +36,7 @@ try {
             speed,
             status,
             updated_at
-        )
-        VALUES (
+        ) VALUES (
             :job_id,
             :file_name,
             :total_bytes,
@@ -53,12 +54,12 @@ try {
     ");
 
     $stmt->execute([
-        ':job_id'         => $jobId,
-        ':file_name'      => $fileName,
-        ':total_bytes'    => $total,
-        ':uploaded_bytes' => $uploaded,
-        ':speed'          => $speed,
-        ':status'         => $status
+        ':job_id'        => $jobId,
+        ':file_name'     => $fileName,
+        ':total_bytes'   => $total,
+        ':uploaded_bytes'=> $uploaded,
+        ':speed'         => $speed,
+        ':status'        => $status
     ]);
 
     echo json_encode([
