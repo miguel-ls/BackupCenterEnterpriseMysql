@@ -13,7 +13,7 @@ storage/framework/sessions
 storage/framework/views
 
 README.md
-docker-compose.yml
+
 
 *.log
 

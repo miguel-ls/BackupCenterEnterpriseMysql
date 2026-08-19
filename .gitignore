@@ -11,7 +11,7 @@
 /.env
 /.env.*
 !/.env.example
-/resources/config/config.json
+
 
 # Runtime state: database, logs and service caches are generated locally
 /storage/database/*.db
