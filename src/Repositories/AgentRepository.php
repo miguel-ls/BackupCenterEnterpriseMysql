@@ -185,6 +185,10 @@ public function saveFile(
     ]);
 }
 
+function normalizeDate($isoDate) {
+    return date('Y-m-d H:i:s', strtotime($isoDate));
+}
+
 public function saveExecutionHistory(array $data): void
 {
     $this->pdo->beginTransaction();
@@ -193,6 +197,9 @@ public function saveExecutionHistory(array $data): void
     {
         //  SOLO controlar el INSERT 
         if ((int)$data['filesFound'] !== (int)$data['filesSkipped']) {
+
+            $startedAt  = normalizeDate($data['startedAt']);
+            $finishedAt = normalizeDate($data['finishedAt']);
 
             $stmt = $this->pdo->prepare("
                 INSERT INTO execution_history
@@ -225,8 +232,8 @@ public function saveExecutionHistory(array $data): void
 
             $stmt->execute([
                 ':job_id' => $data['jobId'],
-                ':started_at' => $data['startedAt'],
-                ':finished_at' => $data['finishedAt'],
+                ':started_at' => $startedAt,
+                ':finished_at' => $finishedAt,
                 ':files_found' => $data['filesFound'],
                 ':files_uploaded' => $data['filesUploaded'],
                 ':files_skipped' => $data['filesSkipped'],
@@ -247,7 +254,7 @@ public function saveExecutionHistory(array $data): void
         ");
 
         $stmt->execute([
-            ':last_run' => $data['finishedAt'],
+            ':last_run' => $finishedAt,
             ':last_status' => $data['status'],
             ':job_id' => $data['jobId']
         ]);
@@ -270,8 +277,8 @@ public function saveExecutionHistory(array $data): void
             ");
 
             $stmt->execute([
-                ':started_at' => $data['startedAt'],
-                ':finished_at' => $data['finishedAt'],
+                ':started_at' => $startedAt,
+                ':finished_at' => $finishedAt,
                 ':queue_id' => $data['queueId']
             ]);
         }
