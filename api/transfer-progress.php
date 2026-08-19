@@ -151,12 +151,12 @@ try {
     ");
 
     $stmt->execute([
-        ':job_id'   => $jobId,
-        ':file_name'=> $fileName,
-        ':uploaded' => $uploaded,
-        ':total'    => $total,
-        ':speed'    => $speed,
-        ':status'   => $status
+        ':job_id'         => $jobId,
+        ':file_name'      => $fileName,
+        ':total_bytes'    => $total,
+        ':uploaded_bytes' => $uploaded,
+        ':speed'          => $speed,
+        ':status'         => $status
     ]);
 
     /*
