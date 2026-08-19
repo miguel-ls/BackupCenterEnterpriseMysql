@@ -9,6 +9,9 @@ use BackupCenter\Repositories\AgentRepository;
 
 header('Content-Type: application/json');
 
+// // ----------------------------------------------------------------------------------------------------------------------
+// // ------------------------- este archivo no debe modificarse , no se lee en proyecto es duplicado -----------------------
+// // ----------------------------------------------------------------------------------------------------------------------
 try {
 
     $app = new Application();
