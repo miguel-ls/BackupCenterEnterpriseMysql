@@ -50,17 +50,13 @@ class Application
     private BackupCenterAgent $agent;
     private Database $database;
     
-
-private JobRepository $jobRepository;
-private ConnectionRepository $connectionRepository;
-private ClientRepository $clientRepository;
-private BackupService $backupService;
+    private JobRepository $jobRepository;
+    private ConnectionRepository $connectionRepository;
+    private ClientRepository $clientRepository;
+    private BackupService $backupService;
 
     private SchedulerLoop $schedulerLoop;
     private SchedulerEngine $schedulerEngine;
-
-    
-
     private SchedulerService $schedulerService;
 
     private JobQueueRepository $jobQueue;
