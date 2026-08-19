@@ -3,43 +3,57 @@
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/bootstrap.php';
 
+header('Content-Type: application/json');
+
 use BackupCenter\Core\ApiResponse;
 use BackupCenter\Core\AgentAuth;
 use BackupCenter\Core\ApiController;
 use BackupCenter\Repositories\AgentRepository;
 use BackupCenter\Services\AgentService;
 
-$service = new AgentService($pdo);
+try {
 
-$action = $_GET['action'] ?? '';
-$authenticatedConnectionId = null;
+    $service = new AgentService($pdo);
 
-if (
-    in_array($action, ['exists', 'register-file', 'execution-history'], true)
-    && array_key_exists('HTTP_AUTHORIZATION', $_SERVER)
-) {
-    $agentIdentity = AgentAuth::validateAgentToken(new AgentRepository($pdo));
-    $authenticatedConnectionId = $agentIdentity['connection_id'];
-}
+    $action = $_GET['action'] ?? '';
+    $authenticatedConnectionId = null;
 
-switch ($action) {
+    if (
+        in_array($action, ['exists', 'register-file', 'execution-history'], true)
+        && array_key_exists('HTTP_AUTHORIZATION', $_SERVER)
+    ) {
+        $agentIdentity = AgentAuth::validateAgentToken(new AgentRepository($pdo));
+        $authenticatedConnectionId = $agentIdentity['connection_id'];
+    }
 
-    case 'register':
-        $service->register();
-        break;
+    switch ($action) {
 
-    case 'exists':
-        $service->exists($authenticatedConnectionId);
-        break;
+        case 'register':
+            $service->register();
+            break;
 
-    case 'register-file':
-        $service->registerFile($authenticatedConnectionId);
-        break;
-                
-    case 'execution-history':
-        $service->executionHistory($authenticatedConnectionId);
-        break;
+        case 'exists':
+            $service->exists($authenticatedConnectionId);
+            break;
 
-    default:
-        ApiResponse::error('Invalid action');
+        case 'register-file':
+            $service->registerFile($authenticatedConnectionId);
+            break;
+
+        case 'execution-history':
+            $service->executionHistory($authenticatedConnectionId);
+            break;
+
+        default:
+            ApiResponse::error('Invalid action');
+    }
+
+} catch (\Throwable $e) {
+
+    http_response_code(500);
+
+    echo json_encode([
+        'error' => $e->getMessage()
+    ]);
+
 }
