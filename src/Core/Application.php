@@ -59,8 +59,10 @@ private BackupService $backupService;
     private SchedulerLoop $schedulerLoop;
     private SchedulerEngine $schedulerEngine;
 
-    private SchedulerService $schedulerService;
     
+
+    private SchedulerService $schedulerService;
+
     private JobQueueRepository $jobQueue;
     private BackupWorker $backupWorker;
 
