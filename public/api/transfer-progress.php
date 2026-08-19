@@ -127,8 +127,8 @@ try {
         INSERT INTO transfer_progress (
             job_id,
             file_name,
-            uploaded_bytes,
             total_bytes,
+            uploaded_bytes,
             speed,
             status,
             updated_at
@@ -136,19 +136,18 @@ try {
         VALUES (
             :job_id,
             :file_name,
-            :uploaded,
-            :total,
+            :total_bytes,
+            :uploaded_bytes,
             :speed,
             :status,
-            datetime('now')
+            NOW()
         )
-        ON CONFLICT(job_id, file_name)
-        DO UPDATE SET
-            uploaded_bytes = excluded.uploaded_bytes,
-            total_bytes    = excluded.total_bytes,
-            speed          = excluded.speed,
-            status         = excluded.status,
-            updated_at     = datetime('now')
+        ON DUPLICATE KEY UPDATE
+            total_bytes = VALUES(total_bytes),
+            uploaded_bytes = VALUES(uploaded_bytes),
+            speed = VALUES(speed),
+            status = VALUES(status),
+            updated_at = NOW();
     ");
 
     $stmt->execute([
