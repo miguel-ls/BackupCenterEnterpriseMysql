@@ -22,69 +22,69 @@ ACTUALIZAR ESTRUCTURA SETTINGS
 
 $columns = [];
 
-$stmt = $pdo->query("PRAGMA table_info(settings)");
+// $stmt = $pdo->query("PRAGMA table_info(settings)");
 
-if ($stmt) {
+// if ($stmt) {
 
-    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $column) {
-        $columns[$column['name']] = true;
-    }
+//     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $column) {
+//         $columns[$column['name']] = true;
+//     }
 
-}
+// }
 
-$newColumns = [
+// $newColumns = [
 
-    "sftpgo_enabled"   => "ALTER TABLE settings ADD COLUMN sftpgo_enabled INTEGER DEFAULT 0",
+//     "sftpgo_enabled"   => "ALTER TABLE settings ADD COLUMN sftpgo_enabled INTEGER DEFAULT 0",
 
-    "sftpgo_protocol"  => "ALTER TABLE settings ADD COLUMN sftpgo_protocol TEXT DEFAULT 'http'",
+//     "sftpgo_protocol"  => "ALTER TABLE settings ADD COLUMN sftpgo_protocol TEXT DEFAULT 'http'",
 
-    "sftpgo_host"      => "ALTER TABLE settings ADD COLUMN sftpgo_host TEXT",
+//     "sftpgo_host"      => "ALTER TABLE settings ADD COLUMN sftpgo_host TEXT",
 
-    "sftpgo_port"      => "ALTER TABLE settings ADD COLUMN sftpgo_port INTEGER DEFAULT 8088",
+//     "sftpgo_port"      => "ALTER TABLE settings ADD COLUMN sftpgo_port INTEGER DEFAULT 8088",
 
-    "sftpgo_username"   => "ALTER TABLE settings ADD COLUMN sftpgo_username TEXT",
+//     "sftpgo_username"   => "ALTER TABLE settings ADD COLUMN sftpgo_username TEXT",
 
-    "sftpgo_password"   => "ALTER TABLE settings ADD COLUMN sftpgo_password TEXT",
+//     "sftpgo_password"   => "ALTER TABLE settings ADD COLUMN sftpgo_password TEXT",
 
-    "sftpgo_base_path" => "ALTER TABLE settings ADD COLUMN sftpgo_base_path TEXT DEFAULT '/mnt/Interno1TB/BackupsSQL'"
+//     "sftpgo_base_path" => "ALTER TABLE settings ADD COLUMN sftpgo_base_path TEXT DEFAULT '/mnt/Interno1TB/BackupsSQL'"
 
-];
+// ];
 
-foreach ($newColumns as $column => $sql) {
+// foreach ($newColumns as $column => $sql) {
 
-    if (!isset($columns[$column])) {
-        $pdo->exec($sql);
-    }
+//     if (!isset($columns[$column])) {
+//         $pdo->exec($sql);
+//     }
 
-}
+// }
 
 /*==================================================
 TABLA
 ==================================================*/
 
-$pdo->exec("
-CREATE TABLE IF NOT EXISTS settings(
+// $pdo->exec("
+// CREATE TABLE IF NOT EXISTS settings(
 
-    id INTEGER PRIMARY KEY CHECK(id=1),
+//     id INTEGER PRIMARY KEY CHECK(id=1),
 
-    scheduler_interval INTEGER DEFAULT 60,
+//     scheduler_interval INTEGER DEFAULT 60,
 
-    max_threads INTEGER DEFAULT 4,
+//     max_threads INTEGER DEFAULT 4,
 
-    retry_count INTEGER DEFAULT 3,
+//     retry_count INTEGER DEFAULT 3,
 
-    retention_days INTEGER DEFAULT 30,
+//     retention_days INTEGER DEFAULT 30,
 
-    compression INTEGER DEFAULT 1,
+//     compression INTEGER DEFAULT 1,
 
-    log_level TEXT DEFAULT 'INFO',
+//     log_level TEXT DEFAULT 'INFO',
 
-    log_path TEXT DEFAULT 'resources/logs',
+//     log_path TEXT DEFAULT 'resources/logs',
 
-    connection_timeout INTEGER DEFAULT 30
+//     connection_timeout INTEGER DEFAULT 30
 
-)
-");
+// )
+// ");
 
 /*==================================================
 REGISTRO INICIAL

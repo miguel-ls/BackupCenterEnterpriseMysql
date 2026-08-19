@@ -11,9 +11,7 @@ use BackupCenter\Repositories\NotificationRepository;
 
 Auth::require();
 
-$db = new Database(
-    Paths::database() . '/backupcenter.db'
-);
+$db = new Database();
 
 $repository = new NotificationRepository($db);
 

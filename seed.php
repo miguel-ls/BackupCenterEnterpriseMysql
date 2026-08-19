@@ -12,9 +12,7 @@ echo "==========================================" . PHP_EOL;
 echo " Development Seeder" . PHP_EOL;
 echo "==========================================" . PHP_EOL;
 
-$db = new Database(
-    Paths::database() . '/backupcenter.db'
-);
+$db = new Database();
 
 $connections = new ConnectionRepository($db);
 $jobs = new JobRepository($db);

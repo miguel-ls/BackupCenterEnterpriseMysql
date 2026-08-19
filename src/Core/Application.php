@@ -72,9 +72,7 @@ private SettingsRepository $settingsRepository;
     {
         date_default_timezone_set('America/Lima');
         
-        $this->database = new Database(
-            Paths::database() . '/backupcenter.db'
-        );
+        $this->database = new Database();
 
         $this->config = new ConfigurationManager(
             Paths::config() . '/config.json'

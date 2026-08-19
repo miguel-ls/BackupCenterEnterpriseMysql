@@ -16,23 +16,23 @@ class JobRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
-CREATE TABLE IF NOT EXISTS jobs
-(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    connection_id INTEGER,
-    name TEXT NOT NULL,
-    source TEXT,
-    destination TEXT,
-    remote_path TEXT,
-    schedule TEXT,
-    enabled INTEGER DEFAULT 1,
-    last_run TEXT,
-    last_status TEXT,
-    running INTEGER DEFAULT 0,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-);
-        ");
+//         $this->db->exec("
+// CREATE TABLE IF NOT EXISTS jobs
+// (
+//     id INTEGER PRIMARY KEY AUTOINCREMENT,
+//     connection_id INTEGER,
+//     name TEXT NOT NULL,
+//     source TEXT,
+//     destination TEXT,
+//     remote_path TEXT,
+//     schedule TEXT,
+//     enabled INTEGER DEFAULT 1,
+//     last_run TEXT,
+//     last_status TEXT,
+//     running INTEGER DEFAULT 0,
+//     created_at TEXT DEFAULT CURRENT_TIMESTAMP
+// );
+//         ");
     }
 
     public function getJobs(): array

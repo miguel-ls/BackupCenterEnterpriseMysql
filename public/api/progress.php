@@ -13,9 +13,7 @@ try {
 
     Auth::require();
 
-    $database = new Database(
-        Paths::database() . '/backupcenter.db'
-    );
+    $database = new Database();
 
     $pdo = $database->getConnection();
 

@@ -5,6 +5,7 @@ use BackupCenter\Core\ApiResponse;
 use BackupCenter\Core\Audit;
 use BackupCenter\Core\Auth;
 use BackupCenter\Services\JobLogService;
+use BackupCenter\Core\Database;
 
 require_once __DIR__ . '/bootstrap.php';
 
@@ -82,7 +83,7 @@ case "POST":
         )
         VALUES
         (
-            ?,?,?,?,?,?,datetime('now')
+            ?,?,?,?,?,?,NOW()
         )
     ");
 

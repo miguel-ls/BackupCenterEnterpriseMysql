@@ -44,7 +44,7 @@ $checks[] = [
 */
 
 
-$db = Paths::database() . '/backupcenter.db';
+$db = $db = new Database();
 
 $checks[] = [
     "name"=>"SQLite",

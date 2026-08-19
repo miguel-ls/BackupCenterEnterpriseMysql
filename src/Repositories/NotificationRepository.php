@@ -18,17 +18,17 @@ class NotificationRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
-        CREATE TABLE IF NOT EXISTS notifications
-        (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            level TEXT NOT NULL,
-            title TEXT NOT NULL,
-            message TEXT NOT NULL,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-            is_read INTEGER DEFAULT 0
-        );
-        ");
+        // $this->db->exec("
+        // CREATE TABLE IF NOT EXISTS notifications
+        // (
+        //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //     level TEXT NOT NULL,
+        //     title TEXT NOT NULL,
+        //     message TEXT NOT NULL,
+        //     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        //     is_read INTEGER DEFAULT 0
+        // );
+        // ");
     }
 
     public function add(

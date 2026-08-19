@@ -405,7 +405,7 @@ async function saveClient(client) {
 
     let response;
 
-    if (client.id) {
+    if (client.id && Number(client.id) > 0) {
 
         response = await updateClient(client);
 
@@ -416,17 +416,12 @@ async function saveClient(client) {
     }
 
     if (!response.success) {
-
         alert(response.message);
-
         return;
-
     }
 
     await loadClients();
-
     closeForm();
-
 }
 
 onMounted(loadClients)

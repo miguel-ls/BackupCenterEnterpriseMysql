@@ -103,9 +103,7 @@ echo "  [OK] config.json válido." . PHP_EOL;
 echo PHP_EOL;
 echo "[4/5] Inicializando base de datos..." . PHP_EOL;
 
-$database = new Database(
-    Paths::database() . '/backupcenter.db'
-);
+$database = new Database();
 
 $uploadedRepository = new UploadedFileRepository($database);
 $uploadedRepository->initialize();

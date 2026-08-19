@@ -19,24 +19,24 @@ class SettingsRepository
 
     public function initialize(): void
     {
-        $this->connection->exec("
-            CREATE TABLE IF NOT EXISTS settings
-            (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+        // $this->connection->exec("
+        //     CREATE TABLE IF NOT EXISTS settings
+        //     (
+        //         id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-                category TEXT NOT NULL,
+        //         category TEXT NOT NULL,
 
-                key TEXT NOT NULL,
+        //         key TEXT NOT NULL,
 
-                value TEXT,
+        //         value TEXT,
 
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        //         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        //         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-                UNIQUE(category, key)
-            )
-        ");
+        //         UNIQUE(category, key)
+        //     )
+        // ");
     }
 
     public function get(string $category, string $key, ?string $default = null): ?string

@@ -154,7 +154,7 @@ if ((int)$user["twofactor_enabled"] === 1) {
 
 $pdo->prepare("
 UPDATE users
-SET last_login=datetime('now')
+SET last_login=NOW()
 WHERE id=?
 ")->execute([
     $user["id"]

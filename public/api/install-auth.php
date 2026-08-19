@@ -7,7 +7,7 @@ use BackupCenter\Core\Database;
 use BackupCenter\Core\Paths;
 use BackupCenter\Repositories\ConnectionRepository;
 
-$db = new Database(Paths::database() . '/backupcenter.db');
+$db = new Database();
 $repository = new ConnectionRepository($db);
 
 $data = json_decode(file_get_contents('php://input'), true) ?? [];

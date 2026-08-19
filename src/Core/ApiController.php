@@ -54,16 +54,21 @@ class ApiController
 
     public static function bearerToken(): ?string
     {
-        $header = $_SERVER["HTTP_AUTHORIZATION"] ?? "";
+        $headers = function_exists('getallheaders') ? getallheaders() : [];
 
-        if (
-            preg_match(
-                "/Bearer\s+(.*)$/i",
-                $header,
-                $match
-            )
-        ) {
-            return trim($match[1]);
+        $authHeader =
+            $headers['Authorization']
+            ?? $headers['authorization']
+            ?? $_SERVER['HTTP_AUTHORIZATION']
+            ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
+            ?? '';
+
+        if (!$authHeader) {
+            return null;
+        }
+
+        if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return trim($matches[1]);
         }
 
         return null;

@@ -18,32 +18,21 @@ class SessionRepository
 
     private function initialize(): void
     {
-        $this->db->exec("
+        // $this->db->exec("
 
-        CREATE TABLE IF NOT EXISTS user_sessions
-        (
+        // CREATE TABLE `user_sessions` (
+        // `id` tinyint DEFAULT NULL,
+        // `user_id` tinyint DEFAULT NULL,
+        // `token` varchar(60) DEFAULT NULL,
+        // `device` varchar(111) DEFAULT NULL,
+        // `ip` varchar(13) DEFAULT NULL,
+        // `created_at` varchar(19) DEFAULT NULL,
+        // `last_activity` varchar(19) DEFAULT NULL,
+        // `expires_at` varchar(19) DEFAULT NULL,
+        // `active` tinyint DEFAULT NULL
+        // ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            user_id INTEGER NOT NULL,
-
-            token TEXT NOT NULL,
-
-            device TEXT,
-
-            ip TEXT,
-
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-
-            last_activity TEXT DEFAULT CURRENT_TIMESTAMP,
-
-            expires_at TEXT,
-
-            active INTEGER DEFAULT 1
-
-        )
-
-        ");
+        // ");
     }
 
     public function create(
@@ -118,7 +107,7 @@ class SessionRepository
 
                 UPDATE user_sessions
 
-                SET last_activity=datetime('now')
+                SET last_activity=NOW()
 
                 WHERE id=?
 

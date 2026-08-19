@@ -16,17 +16,17 @@ class UploadedFileRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
-            CREATE TABLE IF NOT EXISTS uploaded_files
-            (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                job_id INTEGER NOT NULL,
-                filename TEXT NOT NULL,
-                filesize INTEGER NOT NULL,
-                sha256 TEXT NOT NULL,
-                uploaded_at TEXT NOT NULL
-            );
-        ");
+        // $this->db->exec("
+        //     CREATE TABLE IF NOT EXISTS uploaded_files
+        //     (
+        //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //         job_id INTEGER NOT NULL,
+        //         filename TEXT NOT NULL,
+        //         filesize INTEGER NOT NULL,
+        //         sha256 TEXT NOT NULL,
+        //         uploaded_at TEXT NOT NULL
+        //     );
+        // ");
     }
 
 public function exists(
@@ -91,39 +91,39 @@ public function save(
 
     public function initializeExecutionHistory(): void
     {
-        $this->db->exec("
-            CREATE TABLE IF NOT EXISTS execution_history
-            (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                job_id INTEGER NOT NULL,
-                started_at TEXT NOT NULL,
-                client TEXT NOT NULL,
-                files_found INTEGER NOT NULL,
-                files_uploaded INTEGER NOT NULL,
-                files_skipped INTEGER NOT NULL,
-                errors INTEGER NOT NULL,
-                duration REAL NOT NULL,
-                status TEXT NOT NULL
-            );
-        ");
+        // $this->db->exec("
+        //     CREATE TABLE IF NOT EXISTS execution_history
+        //     (
+        //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //         job_id INTEGER NOT NULL,
+        //         started_at TEXT NOT NULL,
+        //         client TEXT NOT NULL,
+        //         files_found INTEGER NOT NULL,
+        //         files_uploaded INTEGER NOT NULL,
+        //         files_skipped INTEGER NOT NULL,
+        //         errors INTEGER NOT NULL,
+        //         duration REAL NOT NULL,
+        //         status TEXT NOT NULL
+        //     );
+        // ");
     }
 
     public function initializeJobs(): void
     {
-        $this->db->exec("
-            CREATE TABLE IF NOT EXISTS jobs
-            (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                source TEXT,
-                destination TEXT,
-                schedule TEXT,
-                enabled INTEGER DEFAULT 1,
-                last_run TEXT,
-                last_status TEXT,
-                created_at TEXT DEFAULT CURRENT_TIMESTAMP
-            );
-        ");
+        // $this->db->exec("
+        //     CREATE TABLE IF NOT EXISTS jobs
+        //     (
+        //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //         name TEXT NOT NULL,
+        //         source TEXT,
+        //         destination TEXT,
+        //         schedule TEXT,
+        //         enabled INTEGER DEFAULT 1,
+        //         last_run TEXT,
+        //         last_status TEXT,
+        //         created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        //     );
+        // ");
 
         $this->db->exec("
             INSERT INTO jobs

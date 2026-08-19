@@ -133,7 +133,7 @@ $pdo->prepare("
 
 UPDATE users
 
-SET last_login=datetime('now')
+SET last_login=NOW()
 
 WHERE id=?
 

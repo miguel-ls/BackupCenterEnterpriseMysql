@@ -12,21 +12,24 @@ class SftpGoService
 
     public function __construct()
     {
-        $db = new Database(
-            Paths::database() . '/backupcenter.db'
-        );
+        $db = new Database();
 
         $pdo = $db->getConnection();
 
         $this->settings = $pdo->query("
             SELECT *
             FROM settings
-            WHERE id=1
+            LIMIT 1
         ")->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function isEnabled(): bool
     {
+        // En Windows (entorno local de desarrollo) SFTPGo/cp no están disponibles.
+        if (PHP_OS_FAMILY === 'Windows') {
+            return false;
+        }
+
         return (int)($this->settings['sftpgo_enabled'] ?? 0) === 1;
     }
 
@@ -404,9 +407,7 @@ public function resetPassword(string $username): array
     }
 
     // Sincronizar la nueva contraseña en la tabla connections
-    $db = new Database(
-        Paths::database() . '/backupcenter.db'
-    );
+    $db = new Database();
 
     $pdo = $db->getConnection();
 

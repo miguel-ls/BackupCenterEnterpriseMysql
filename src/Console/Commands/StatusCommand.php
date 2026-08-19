@@ -26,9 +26,9 @@ class StatusCommand implements Command
             . (file_exists(Paths::config() . '/config.json') ? "OK" : "ERROR")
             . PHP_EOL;
 
-        echo "Database     : "
-            . (file_exists(Paths::database() . '/backupcenter.db') ? "OK" : "ERROR")
-            . PHP_EOL;
+        // echo "Database     : "
+        //     . (file_exists(Paths::database() . '/backupcenter.db') ? "OK" : "ERROR")
+        //     . PHP_EOL;
 
         echo "Logs         : "
             . (is_dir(Paths::logs()) ? "OK" : "ERROR")

@@ -41,9 +41,9 @@ class InfoCommand implements Command
             . Paths::logs()
             . PHP_EOL;
 
-        echo "Base de datos  : "
-            . Paths::database() . '/backupcenter.db'
-            . PHP_EOL;
+        // echo "Base de datos  : "
+        //     . Paths::database() . '/backupcenter.db'
+        //     . PHP_EOL;
 
         return 0;
     }

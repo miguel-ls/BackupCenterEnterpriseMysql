@@ -5,9 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use BackupCenter\Core\Database;
 use BackupCenter\Repositories\UploadedFileRepository;
 
-$database = new Database(
-    __DIR__ . '/../database/backupcenter.db'
-);
+$database = new Database();
 
 $repository = new UploadedFileRepository($database);
 

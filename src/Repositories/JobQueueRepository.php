@@ -16,20 +16,20 @@ class JobQueueRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
-        CREATE TABLE IF NOT EXISTS job_queue
-        (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            job_id INTEGER NOT NULL,
-            status TEXT NOT NULL,
-            created_at TEXT,
-            started_at TEXT,
-            finished_at TEXT,
-            worker TEXT,
-            attempts INTEGER DEFAULT 0,
-            last_error TEXT
-        );
-        ");
+        // $this->db->exec("
+        // CREATE TABLE IF NOT EXISTS job_queue
+        // (
+        //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //     job_id INTEGER NOT NULL,
+        //     status TEXT NOT NULL,
+        //     created_at TEXT,
+        //     started_at TEXT,
+        //     finished_at TEXT,
+        //     worker TEXT,
+        //     attempts INTEGER DEFAULT 0,
+        //     last_error TEXT
+        // );
+        // ");
 
         $this->db->exec("\n            UPDATE job_queue\n            SET started_at = NULL\n            WHERE status = 'Pending'\n        ");
 

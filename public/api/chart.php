@@ -9,9 +9,7 @@ use BackupCenter\Core\Auth;
 
 Auth::require();
 
-$db = new Database(
-    Paths::database() . '/backupcenter.db'
-);
+$db = new Database();
 
 $pdo = $db->getConnection();
 
@@ -24,7 +22,15 @@ $startDate = $_GET['start_date']
 
 $sql = "
 SELECT
-    date(datetime(replace(substr(eh.started_at,1,19),'T',' '), '-5 hours')) AS day,
+    DATE(
+        DATE_SUB(
+            STR_TO_DATE(
+                REPLACE(LEFT(eh.started_at,19),'T',' '),
+                '%Y-%m-%d %H:%i:%s'
+            ),
+            INTERVAL 5 HOUR
+        )
+    ) AS day,
     COUNT(*) AS executions,
     COALESCE(SUM(eh.files_uploaded),0) AS uploaded
 FROM execution_history eh
@@ -38,8 +44,16 @@ INNER JOIN connections cn
 INNER JOIN clients c
     ON c.id = cn.client_id
 WHERE
-    date(datetime(replace(substr(eh.started_at,1,19),'T',' '), '-5 hours'))
-        BETWEEN :start_date AND :end_date
+    DATE(
+        DATE_SUB(
+            STR_TO_DATE(
+                REPLACE(LEFT(eh.started_at,19),'T',' '),
+                '%Y-%m-%d %H:%i:%s'
+            ),
+            INTERVAL 5 HOUR
+        )
+    )
+    BETWEEN :start_date AND :end_date
 ";
 
 if ($clientId > 0) {
@@ -48,7 +62,15 @@ if ($clientId > 0) {
 
 $sql .= "
 GROUP BY
-    date(datetime(replace(substr(eh.started_at,1,19),'T',' '), '-5 hours'))
+    DATE(
+        DATE_SUB(
+            STR_TO_DATE(
+                REPLACE(LEFT(eh.started_at,19),'T',' '),
+                '%Y-%m-%d %H:%i:%s'
+            ),
+            INTERVAL 5 HOUR
+        )
+    )
 ORDER BY
     day
 ";

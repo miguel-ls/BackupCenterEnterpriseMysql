@@ -5,7 +5,7 @@ echo "===============================" . PHP_EOL;
 echo " Reset Development Environment" . PHP_EOL;
 echo "===============================" . PHP_EOL;
 
-$db = __DIR__ . "/storage/database/backupcenter.db";
+$db = new Database();
 
 if (file_exists($db)) {
 

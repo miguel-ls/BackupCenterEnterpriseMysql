@@ -9,9 +9,7 @@ use BackupCenter\Core\Auth;
 
 Auth::require();
 
-$db = new Database(
-    Paths::database() . '/backupcenter.db'
-);
+$db = new Database();
 
 $pdo = $db->getConnection();
 

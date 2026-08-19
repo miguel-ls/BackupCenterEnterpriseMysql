@@ -62,6 +62,10 @@ switch ($method) {
 
                 $service = new SftpGoService();
 
+                if (!$service->isEnabled()) {
+                    throw new Exception('SFTPGo está deshabilitado en este entorno.');
+                }
+
                 $result = $service->resetPassword(
                     $client['sftp_alias']
                 );

@@ -16,24 +16,24 @@ class ConnectionRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
-            CREATE TABLE IF NOT EXISTS connections
-            (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                host TEXT NOT NULL,
-                port INTEGER NOT NULL DEFAULT 22,
-                username TEXT NOT NULL,
-                password TEXT NOT NULL,
-                hostkey TEXT,
-                protocol TEXT NOT NULL DEFAULT 'SFTP',
-                client_id INTEGER,
-                remote_path TEXT NOT NULL,
-                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-                install_token TEXT,
-                agent_token_hash TEXT
-            );
-        ");
+        // $this->db->exec("
+        //     CREATE TABLE IF NOT EXISTS connections
+        //     (
+        //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //         name TEXT NOT NULL,
+        //         host TEXT NOT NULL,
+        //         port INTEGER NOT NULL DEFAULT 22,
+        //         username TEXT NOT NULL,
+        //         password TEXT NOT NULL,
+        //         hostkey TEXT,
+        //         protocol TEXT NOT NULL DEFAULT 'SFTP',
+        //         client_id INTEGER,
+        //         remote_path TEXT NOT NULL,
+        //         created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        //         install_token TEXT,
+        //         agent_token_hash TEXT
+        //     );
+        // ");
 
         $this->ensureInstallTokenColumn();
         $this->ensureAgentTokenHashColumn();
@@ -42,30 +42,30 @@ class ConnectionRepository
 
     private function ensureInstallTokenColumn(): void
     {
-        $stmt = $this->db->query('PRAGMA table_info(connections)');
-        $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $stmt = $this->db->query('PRAGMA table_info(connections)');
+        // $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($columns as $column) {
-            if (($column['name'] ?? '') === 'install_token') {
-                return;
-            }
-        }
+        // foreach ($columns as $column) {
+        //     if (($column['name'] ?? '') === 'install_token') {
+        //         return;
+        //     }
+        // }
 
-        $this->db->exec('ALTER TABLE connections ADD COLUMN install_token TEXT');
+        // $this->db->exec('ALTER TABLE connections ADD COLUMN install_token TEXT');
     }
 
     private function ensureAgentTokenHashColumn(): void
     {
-        $stmt = $this->db->query('PRAGMA table_info(connections)');
-        $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $stmt = $this->db->query('PRAGMA table_info(connections)');
+        // $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($columns as $column) {
-            if (($column['name'] ?? '') === 'agent_token_hash') {
-                return;
-            }
-        }
+        // foreach ($columns as $column) {
+        //     if (($column['name'] ?? '') === 'agent_token_hash') {
+        //         return;
+        //     }
+        // }
 
-        $this->db->exec('ALTER TABLE connections ADD COLUMN agent_token_hash TEXT');
+        // $this->db->exec('ALTER TABLE connections ADD COLUMN agent_token_hash TEXT');
     }
 
     private function populateMissingInstallTokens(): void

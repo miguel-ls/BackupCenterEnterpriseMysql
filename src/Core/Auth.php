@@ -19,9 +19,7 @@ class Auth
             return false;
         }
 
-        $database = new Database(
-            Paths::database() . '/backupcenter.db'
-        );
+        $database = new Database();
 
         $session = (new SessionRepository($database))->validate($token);
 

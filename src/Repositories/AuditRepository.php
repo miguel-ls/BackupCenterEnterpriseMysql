@@ -20,53 +20,53 @@ class AuditRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
+        // $this->db->exec("
 
-        CREATE TABLE IF NOT EXISTS audit_log
-        (
+        // CREATE TABLE IF NOT EXISTS audit_log
+        // (
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        //     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
 
-            username TEXT,
+        //     username TEXT,
 
-            module TEXT,
+        //     module TEXT,
 
-            action TEXT,
+        //     action TEXT,
 
-            description TEXT,
+        //     description TEXT,
 
-            ip TEXT,
+        //     ip TEXT,
 
-            hostname TEXT,
+        //     hostname TEXT,
 
-            success INTEGER DEFAULT 1,
+        //     success INTEGER DEFAULT 1,
 
-            duration REAL DEFAULT 0,
+        //     duration REAL DEFAULT 0,
 
-            metadata TEXT
+        //     metadata TEXT
 
-        )
+        // )
 
-        ");
+        // ");
 
-        $columns = $this->db->query("PRAGMA table_info(audit_log)")
-            ->fetchAll(PDO::FETCH_ASSOC);
+        // $columns = $this->db->query("PRAGMA table_info(audit_log)")
+        //     ->fetchAll(PDO::FETCH_ASSOC);
 
-        $existing = array_column($columns, 'name');
+        // $existing = array_column($columns, 'name');
 
-        if (!in_array('hostname', $existing)) {
-            $this->db->exec("ALTER TABLE audit_log ADD COLUMN hostname TEXT");
-        }
+        // if (!in_array('hostname', $existing)) {
+        //     $this->db->exec("ALTER TABLE audit_log ADD COLUMN hostname TEXT");
+        // }
 
-        if (!in_array('duration', $existing)) {
-            $this->db->exec("ALTER TABLE audit_log ADD COLUMN duration REAL DEFAULT 0");
-        }
+        // if (!in_array('duration', $existing)) {
+        //     $this->db->exec("ALTER TABLE audit_log ADD COLUMN duration REAL DEFAULT 0");
+        // }
 
-        if (!in_array('metadata', $existing)) {
-            $this->db->exec("ALTER TABLE audit_log ADD COLUMN metadata TEXT");
-        }
+        // if (!in_array('metadata', $existing)) {
+        //     $this->db->exec("ALTER TABLE audit_log ADD COLUMN metadata TEXT");
+        // }
     }
 
     public function add(

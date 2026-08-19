@@ -8,7 +8,7 @@ use BackupCenter\Core\Application;
 use BackupCenter\Core\Paths;
 use BackupCenter\Repositories\ExecutionHistoryRepository;
 use BackupCenter\Core\Auth;
-
+use BackupCenter\Core\Database;
 
 Auth::require();
 
@@ -20,7 +20,7 @@ $history = new ExecutionHistoryRepository(
     $app->database()
 );
 
-$db = Paths::database() . '/backupcenter.db';
+$db = new Database();
 
 $internet = @fsockopen("8.8.8.8",53,$errno,$errstr,2);
 
@@ -34,8 +34,8 @@ $data=[
         ],
 
         [
-            "name"=>"SQLite",
-            "ok"=>file_exists($db)
+            "name"=>"Database",
+            "ok"=>$db->getConnection() !== null
         ],
 
         [
@@ -71,9 +71,9 @@ foreach ($last as $row) {
 
 }
 
-if(!file_exists($db)){
-    $data["alerts"][] = "Base de datos SQLite no encontrada";
-}
+// if(!file_exists($db)){
+//     $data["alerts"][] = "Base de datos SQLite no encontrada";
+// }
 
 if($internet === false){
     $data["alerts"][] = "Sin conexión a Internet";

@@ -26,8 +26,8 @@ class VerifyCommand
             'Carpeta logs' =>
                 is_dir(Paths::logs()),
 
-            'Base de datos' =>
-                file_exists(Paths::database() . '/backupcenter.db'),
+            // 'Base de datos' =>
+            //     file_exists(Paths::database() . '/backupcenter.db'),
 
             'WinSCP' =>
                 file_exists($config->get('winscp.executable')),

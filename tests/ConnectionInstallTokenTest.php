@@ -11,7 +11,7 @@ if (file_exists($dbPath)) {
     unlink($dbPath);
 }
 
-$database = new Database($dbPath);
+$database = new Database();
 $repository = new ConnectionRepository($database);
 
 $repository->initialize();

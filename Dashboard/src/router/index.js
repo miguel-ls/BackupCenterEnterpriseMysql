@@ -121,25 +121,19 @@ const router = createRouter({
 
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
 
     const user = localStorage.getItem("user")
 
     if (to.meta.requiresAuth && !user) {
-
-        next("/login")
-        return
-
+        return "/login"
     }
 
     if (to.path === "/login" && user) {
-
-        next("/")
-        return
-
+        return "/"
     }
 
-    next()
+    return true
 
 })
 

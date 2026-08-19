@@ -15,24 +15,24 @@ class SystemLogRepository
     }
 
     public function initialize(): void
-{
-    $this->db->exec("
-        CREATE TABLE IF NOT EXISTS system_logs
-        (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            created_at TEXT NOT NULL,
-            level TEXT NOT NULL,
-            module TEXT NOT NULL,
-            action TEXT,
-            message TEXT NOT NULL,
-            context TEXT,
-            username TEXT,
-            client_id INTEGER,
-            connection_id INTEGER,
-            job_id INTEGER
-        )
-    ");
-}
+    {
+        // $this->db->exec("
+        //     CREATE TABLE IF NOT EXISTS system_logs
+        //     (
+        //         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //         created_at TEXT NOT NULL,
+        //         level TEXT NOT NULL,
+        //         module TEXT NOT NULL,
+        //         action TEXT,
+        //         message TEXT NOT NULL,
+        //         context TEXT,
+        //         username TEXT,
+        //         client_id INTEGER,
+        //         connection_id INTEGER,
+        //         job_id INTEGER
+        //     )
+        // ");
+    }
 
 public function add(
     string $level,

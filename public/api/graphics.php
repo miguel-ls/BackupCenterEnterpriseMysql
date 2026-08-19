@@ -9,9 +9,7 @@ use BackupCenter\Core\Auth;
 
 Auth::require();
 
-$db = new Database(
-    Paths::database() . '/backupcenter.db'
-);
+$db = new Database();
 
 $pdo = $db->getConnection();
 
@@ -20,7 +18,15 @@ $status = trim((string)($_GET['status'] ?? ''));
 $from = trim((string)($_GET['from'] ?? date('Y-m-d', strtotime('-7 days'))));
 $to = trim((string)($_GET['to'] ?? date('Y-m-d')));
 
-$dateExpression = "date(datetime(replace(substr(eh.started_at,1,19),'T',' '), '-5 hours'))";
+$dateExpression = "DATE(
+    DATE_SUB(
+        STR_TO_DATE(
+            REPLACE(LEFT(eh.started_at,19),'T',' '),
+            '%Y-%m-%d %H:%i:%s'
+        ),
+        INTERVAL 5 HOUR
+    )
+)";
 
 $where = [
     "$dateExpression BETWEEN :from AND :to"
@@ -61,7 +67,7 @@ GROUP BY day, c.id, c.business_name
 ORDER BY day, c.business_name
 ";
 
-//echo "<pre>$sql</pre>";
+// 
 
 $stmt = $pdo->prepare($sql);
 foreach ($params as $name => $value) {

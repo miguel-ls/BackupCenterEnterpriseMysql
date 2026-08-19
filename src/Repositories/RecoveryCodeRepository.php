@@ -18,24 +18,24 @@ class RecoveryCodeRepository
 
     public function initialize(): void
     {
-        $this->db->exec("
+        // $this->db->exec("
 
-        CREATE TABLE IF NOT EXISTS recovery_codes
-        (
+        // CREATE TABLE IF NOT EXISTS recovery_codes
+        // (
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-            user_id INTEGER NOT NULL,
+        //     user_id INTEGER NOT NULL,
 
-            code TEXT NOT NULL,
+        //     code TEXT NOT NULL,
 
-            used INTEGER DEFAULT 0,
+        //     used INTEGER DEFAULT 0,
 
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        //     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 
-        )
+        // )
 
-        ");
+        // ");
     }
 
     public function regenerate(int $userId): array
