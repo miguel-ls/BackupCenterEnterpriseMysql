@@ -11,12 +11,12 @@
                 <th class="text-left p-4">Cliente</th>
                 <th class="text-left p-4">Host</th>
                 <th class="text-left p-4">Puerto</th>
-                <th class="text-left p-4">Usuario</th>
+                <!-- <th class="text-left p-4">Usuario</th> -->
                 <th class="text-left p-4">Protocolo</th>
                 <th class="text-left p-4">Estado</th>
                 <th class="text-left p-4">Install Token</th>
                 <th class="text-left p-4">Remote Path</th>
-                <th class="text-left p-4">Estado de instalación</th>
+                <th class="text-left p-4">Instalación</th>
                 <th class="text-center p-4">Acciones</th>
 
             </tr>
@@ -46,9 +46,9 @@
                     {{ connection.port }}
                 </td>
 
-                <td class="p-4">
+                <!-- <td class="p-4">
                     {{ connection.username }}
-                </td>
+                </td> -->
 
                 <td class="p-4">
                     {{ connection.protocol }}
