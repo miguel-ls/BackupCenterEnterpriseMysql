@@ -202,8 +202,6 @@ $installToken = $this->generateInstallToken();
                 name=?,
                 host=?,
                 port=?,
-                username=?,
-                password=?,
                 hostkey=?,
                 protocol=?,
                 remote_path=?
@@ -215,8 +213,6 @@ $installToken = $this->generateInstallToken();
             $name,
             $host,
             $port,
-            $username,
-            $password,
             $hostkey,
             $protocol,
             $remotePath,
@@ -234,6 +230,15 @@ $installToken = $this->generateInstallToken();
             $installed ? 1 : 0,
             $id
         ]);
+    }
+
+    public function updatePassword(int $id, string $password): bool
+    {
+        $stmt = $this->db->prepare(
+            'UPDATE connections SET password=? WHERE id=?'
+        );
+
+        return $stmt->execute([$password, $id]);
     }
 
     public function delete(int $id): bool

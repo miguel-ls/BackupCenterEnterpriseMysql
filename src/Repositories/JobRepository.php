@@ -46,7 +46,16 @@ class JobRepository
                 j.destination,
                 j.schedule,
                 j.enabled,
+                j.versioning,
 COALESCE(
+    (
+        SELECT q.created_at
+        FROM job_queue q
+        WHERE q.job_id = j.id
+          AND q.status IN ('Pending', 'Running')
+        ORDER BY q.id DESC
+        LIMIT 1
+    ),
     (
         SELECT e.started_at
         FROM execution_history e
@@ -59,6 +68,14 @@ COALESCE(
 ) AS time,
 
 COALESCE(
+    (
+        SELECT q.status
+        FROM job_queue q
+        WHERE q.job_id = j.id
+          AND q.status IN ('Pending', 'Running')
+        ORDER BY q.id DESC
+        LIMIT 1
+    ),
     (
         SELECT e.status
         FROM execution_history e
@@ -106,7 +123,8 @@ public function createJob(
     string $source,
     string $destination,
     string $schedule,
-    int $enabled = 1
+    int $enabled = 1,
+    int $versioning = 1
 ): int
 {
     $stmt = $this->db->prepare("
@@ -118,11 +136,12 @@ public function createJob(
             destination,
             schedule,
             enabled,
+            versioning,
             last_status
         )
         VALUES
         (
-            ?,?,?,?,?,?,?
+            ?,?,?,?,?,?,?,?
         )
     ");
 
@@ -133,6 +152,7 @@ public function createJob(
         $destination,
         $schedule,
         $enabled,
+        $versioning,
         'Pendiente'
     ]);
 
@@ -146,7 +166,8 @@ public function updateJob(
     string $source,
     string $destination,
     string $schedule,
-    int $enabled = 1
+    int $enabled = 1,
+    int $versioning = 1
 ): bool
 {
     $stmt = $this->db->prepare("
@@ -157,7 +178,8 @@ public function updateJob(
             source=?,
             destination=?,
             schedule=?,
-            enabled=?
+            enabled=?,
+            versioning=?
         WHERE id=?
     ");
 
@@ -168,6 +190,7 @@ public function updateJob(
         $destination,
         $schedule,
         $enabled,
+        $versioning,
         $id
     ]);
 }

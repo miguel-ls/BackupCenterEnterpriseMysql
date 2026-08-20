@@ -112,7 +112,8 @@ const selectedJob = ref({
     name:'',
     source:'',
     destination:'',
-    schedule:''
+    schedule:'',
+    versioning:true
 
 })
 
@@ -170,7 +171,8 @@ function newJob(){
         name:'',
         source:'',
         destination:'',
-        schedule:''
+        schedule:'',
+        versioning:true
 
     }
 

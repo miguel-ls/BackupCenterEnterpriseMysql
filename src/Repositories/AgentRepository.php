@@ -17,19 +17,21 @@ class AgentRepository
     {
         $stmt = $this->pdo->prepare("
             SELECT
-                id,
-                client_id,
-                name,
-                host,
-                port,
-                username,
-                password,
-                hostkey,
-                protocol,
-                remote_path,
-                agent_token_hash
-            FROM connections
-            WHERE install_token = ?
+                c.id,
+                c.client_id,
+                c.name,
+                c.host,
+                c.port,
+                cl.sftp_alias AS username,
+                cl.sftp_password AS password,
+                c.hostkey,
+                c.protocol,
+                c.remote_path,
+                c.agent_token_hash
+            FROM connections c
+            INNER JOIN clients cl
+                ON cl.id = c.client_id
+            WHERE c.install_token = ?
             LIMIT 1
         ");
 
@@ -118,7 +120,8 @@ class AgentRepository
                 name,
                 source,
                 destination,
-                schedule
+                schedule,
+                versioning
             FROM jobs
             WHERE connection_id = ?
             AND enabled = 1
@@ -302,7 +305,8 @@ public function getQueuedJobs(int $connectionId): array
             j.name,
             j.source,
             j.destination,
-            j.schedule
+            j.schedule,
+            j.versioning
         FROM job_queue q
         INNER JOIN jobs j
             ON j.id = q.job_id

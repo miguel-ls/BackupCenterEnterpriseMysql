@@ -173,9 +173,9 @@ case 'POST':
 
         (int)$data['port'],
 
-        $data['username'],
+        '',
 
-        $data['password'],
+        '',
 
         $data['hostkey'] ?? '',
 
@@ -230,13 +230,6 @@ case 'PUT':
         true
     );
 
-    $password = trim((string)($data['password'] ?? ''));
-
-    if ($password === '') {
-        $existingConnection = $repository->get((int)$data['id']);
-        $password = $existingConnection['password'] ?? '';
-    }
-
     $repository->update(
 
         (int)$data['id'],
@@ -249,9 +242,9 @@ case 'PUT':
 
         (int)$data['port'],
 
-        $data['username'],
+        '',
 
-        $password,
+        '',
 
         $data['hostkey'] ?? '',
 

@@ -103,8 +103,6 @@
                             <ToggleLeft v-else :size="17"/>
                         </button>
 
-
-
                         <!-- <button
                             @click="$emit('generate-install',connection)"
                             class="bg-blue-600 hover:bg-blue-700 text-white rounded p-2"

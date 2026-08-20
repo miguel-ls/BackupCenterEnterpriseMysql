@@ -39,19 +39,6 @@
     >
 
     <input
-        v-model="connection.username"
-        placeholder="Usuario"
-        class="w-full border rounded-lg p-3"
-    >
-
-    <input
-        v-model="connection.password"
-        type="password"
-        placeholder="Contraseña"
-        class="w-full border rounded-lg p-3"
-    >
-
-    <input
         v-model="connection.hostkey"
         placeholder="Host Key"
         class="w-full border rounded-lg p-3"
@@ -120,8 +107,6 @@ const connection = reactive({
     name:'',
     host:'',
     port:22,
-    username:'',
-    password:'',
     hostkey:'',
     protocol:'SFTP',
     remote_path:''
@@ -138,8 +123,6 @@ watch(
 
             Object.assign(connection,value)
 
-            connection.password=''
-
         }else{
 
             Object.assign(connection,{
@@ -148,8 +131,6 @@ watch(
                 name:'',
                 host:'',
                 port:22,
-                username:'',
-                password:'',
                 hostkey:'',
                 protocol:'SFTP',
                 remote_path:''

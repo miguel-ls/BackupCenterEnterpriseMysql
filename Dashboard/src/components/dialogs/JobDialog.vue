@@ -2,7 +2,7 @@
 
 <div
     v-if="modelValue"
-    class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+    class="fixed inset-0 flex items-center justify-center z-50"
 >
 
     <div
@@ -12,7 +12,7 @@
         <!-- Encabezado -->
 
         <div
-            class="flex items-center justify-between px-6 py-5 border-b bg-gradient-to-r from-blue-600 to-blue-700 text-white"
+            class="flex items-center justify-between px-6 py-5 border-b bg-gradient-to-r from-white-600 to-white-700 text-black"
         >
 
             <div>
@@ -23,7 +23,7 @@
 
                 </h2>
 
-                <p class="text-blue-100 text-sm mt-1">
+                <p class="text-gray-700 text-sm mt-1">
 
                     Configure el trabajo de respaldo.
 
@@ -31,12 +31,12 @@
 
             </div>
 
-            <button
+            <!-- <button
                 @click="close"
                 class="w-9 h-9 rounded-full hover:bg-white/20 transition text-2xl leading-none"
             >
                 ×
-            </button>
+            </button> -->
 
         </div>
 

@@ -133,12 +133,20 @@ public function register(): void
         return;
     }
 
-    $jobs = $this->repository->getEnabledJobs(
-        (int)$connection['id']
+    $jobs = array_map(
+        static function (array $job): array {
+            $job['versioning'] = (bool)($job['versioning'] ?? true);
+            return $job;
+        },
+        $this->repository->getEnabledJobs((int)$connection['id'])
     );
 
-    $queue = $this->repository->getQueuedJobs(
-        (int)$connection['id']
+    $queue = array_map(
+        static function (array $job): array {
+            $job['versioning'] = (bool)($job['versioning'] ?? true);
+            return $job;
+        },
+        $this->repository->getQueuedJobs((int)$connection['id'])
     );
 
     $response = [

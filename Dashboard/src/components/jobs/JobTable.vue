@@ -54,6 +54,10 @@
                 </th>                
 
                 <th class="text-center px-4 py-3 font-semibold">
+                    Versionamiento
+                </th>
+
+                <th class="text-center px-4 py-3 font-semibold">
                     Estado
                 </th>
 
@@ -112,6 +116,19 @@
                 <td class="px-4 py-3 text-neutral-600">
                     {{ getScheduleTime(job.schedule) }}
                 </td>                
+
+                <td class="px-4 py-3 text-center">
+
+                    <span
+                        class="px-3 py-1 rounded-full text-xs font-bold"
+                        :class="isVersioningEnabled(job)
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'bg-neutral-200 text-neutral-700'"
+                    >
+                        {{ isVersioningEnabled(job) ? 'Activado' : 'Desactivado' }}
+                    </span>
+
+                </td>
 
                 <td class="px-4 py-3 text-center">
 
@@ -206,7 +223,7 @@
             <tr>
 
                 <td
-                    colspan="10"
+                    colspan="12"
                     class="text-center py-10 text-neutral-500"
                 >
 
@@ -256,6 +273,12 @@ defineEmits([
 function isEnabled(job) {
 
     return Number(job?.enabled ?? 1) === 1;
+
+}
+
+function isVersioningEnabled(job) {
+
+    return Number(job?.versioning ?? 1) === 1;
 
 }
 

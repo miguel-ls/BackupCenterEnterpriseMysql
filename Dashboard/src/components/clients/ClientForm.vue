@@ -2,7 +2,7 @@
 
 <div class="bg-white rounded-xl">
 
-    <div class="grid grid-cols-2 gap-5">
+    <div class="grid grid-cols-3 gap-5">
 
         <div>
 
@@ -43,7 +43,7 @@
 
         </div>
 
-        <div class="col-span-2">
+        <div class="col-span-1">
 
             <label class="block text-sm font-semibold mb-2">
                 Nombre Comercial
@@ -62,18 +62,18 @@
 
         </div>
 
-<div class="col-span-2">
+        <div class="col-span-2">
 
-    <label class="block text-sm font-semibold mb-2">
-        Alias SFTP
-    </label>
+            <label class="block text-sm font-semibold mb-2">
+                Alias SFTP
+            </label>
 
-    <input
-        v-model="form.sftp_alias"
-        class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-    >
+            <input
+                v-model="form.sftp_alias"
+                class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
 
-</div>        
+        </div>        
 
         <div>
 
@@ -101,7 +101,7 @@
 
         </div>
 
-        <div class="col-span-2">
+        <div class="col-span-1">
 
             <label class="block text-sm font-semibold mb-2">
                 Correo
@@ -110,19 +110,6 @@
             <input
                 v-model="form.email"
                 type="email"
-                class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-
-        </div>
-
-        <div class="col-span-2">
-
-            <label class="block text-sm font-semibold mb-2">
-                Dirección
-            </label>
-
-            <input
-                v-model="form.address"
                 class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
 
@@ -146,7 +133,22 @@
 
         </div>
 
-        <div class="col-span-2">
+        <div class="col-span-3">
+
+            <label class="block text-sm font-semibold mb-2">
+                Dirección
+            </label>
+
+            <input
+                v-model="form.address"
+                class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+
+        </div>
+
+
+
+        <div class="col-span-3">
 
             <label class="block text-sm font-semibold mb-2">
                 Observaciones

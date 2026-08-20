@@ -41,16 +41,7 @@ switch ($method) {
 
             try {
 
-                $client = null;
-
-                foreach ($repository->getAll() as $row) {
-
-                    if ((int)$row['id'] === (int)$body['id']) {
-                        $client = $row;
-                        break;
-                    }
-
-                }
+                $client = $repository->get((int)($body['id'] ?? 0));
 
                 if (!$client) {
                     throw new Exception('Cliente no encontrado.');
@@ -69,6 +60,13 @@ switch ($method) {
                 $result = $service->resetPassword(
                     $client['sftp_alias']
                 );
+
+                if (!$repository->updateSftpPassword(
+                    (int)$client['id'],
+                    $result['password']
+                )) {
+                    throw new Exception('No se pudo actualizar la contraseña SFTP del cliente.');
+                }
 
                 Audit::info(
                     'CLIENTS',
@@ -148,6 +146,11 @@ switch ($method) {
 
                 $sftp = $service->provisionClient(
                     $body['sftp_alias']
+                );
+
+                $repository->updateSftpPassword(
+                    $id,
+                    $sftp['password']
                 );
 
             }

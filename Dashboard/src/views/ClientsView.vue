@@ -121,7 +121,7 @@
             @click="resetPassword(client)"
         >
             <KeyRound :size="17"/>
-        </button>        
+        </button>
 
     </div>
 
@@ -208,60 +208,31 @@
     v-if="showPassword"
     class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
 >
-
     <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-
-        <h2 class="text-xl font-bold mb-6">
-            Nueva contraseña SFTP
-        </h2>
+        <h2 class="text-xl font-bold mb-6">Nueva contraseña SFTP</h2>
 
         <div class="space-y-4">
-
             <div>
-
-                <label class="text-sm font-semibold">
-                    Usuario
-                </label>
-
-                <input
-                    class="w-full border rounded-lg p-2"
-                    :value="credentials.username"
-                    readonly
-                >
-
+                <label class="text-sm font-semibold">Usuario</label>
+                <input class="w-full border rounded-lg p-2" :value="credentials.username" readonly>
             </div>
 
             <div>
-
-                <label class="text-sm font-semibold">
-                    Contraseña
-                </label>
-
-                <input
-                    class="w-full border rounded-lg p-2"
-                    :value="credentials.password"
-                    readonly
-                >
-
+                <label class="text-sm font-semibold">Contraseña</label>
+                <input class="w-full border rounded-lg p-2" :value="credentials.password" readonly>
             </div>
-
         </div>
 
         <div class="flex justify-end mt-6">
-
             <button
                 class="px-4 py-2 bg-blue-600 text-white rounded-lg"
-                @click="showPassword=false"
+                @click="showPassword = false"
             >
                 Cerrar
             </button>
-
         </div>
-
     </div>
-
 </div>
-
 
 </MainLayout>
 
@@ -295,12 +266,10 @@ import {
 const clients = ref([])
 const selectedClient = ref(null)
 const showForm = ref(false)
-
 const showPassword = ref(false)
-
 const credentials = ref({
-    username: "",
-    password: ""
+    username: '',
+    password: ''
 })
 
 async function loadClients() {
@@ -367,31 +336,23 @@ async function removeClient(client) {
 
 async function resetPassword(client) {
 
-    const ok = confirm(
-        `¿Restablecer la contraseña SFTP de "${client.business_name}"?`
-    )
-
-    if (!ok) return
+    if (!confirm(`¿Restablecer la contraseña SFTP de "${client.business_name}"?`)) {
+        return
+    }
 
     const response = await resetClientPassword(client.id)
 
-    if (!response.success) {
-
-        alert(response.message)
-
+    if (!response?.success) {
+        alert(response?.message || 'No se pudo restablecer la contraseña SFTP.')
         return
-
     }
 
     credentials.value = {
         username: response.username,
         password: response.password
     }
-
     showPassword.value = true
-
 }
-
 
 function closeForm() {
 

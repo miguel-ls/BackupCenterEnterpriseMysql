@@ -276,6 +276,34 @@
 
             </div>
 
+            <div class="flex items-center justify-between border rounded-lg p-4">
+
+                <div>
+
+                    <div class="font-semibold">
+                        Versionamiento
+                    </div>
+
+                    <p class="text-sm text-neutral-600 mt-1">
+                        Conserva el archivo anterior cuando cambia su contenido.
+                    </p>
+
+                </div>
+
+                <label class="relative inline-flex items-center cursor-pointer">
+
+                    <input
+                        v-model="props.job.versioning"
+                        type="checkbox"
+                        class="sr-only peer"
+                    >
+
+                    <span class="w-11 h-6 bg-neutral-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-5 after:h-5 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-5"></span>
+
+                </label>
+
+            </div>
+
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
 
                 <div class="font-semibold text-blue-700 mb-2">
@@ -615,6 +643,12 @@ async function save(){
 onMounted(async()=>{
 
     await loadConnections()
+
+    if (props.job.versioning === undefined || props.job.versioning === null) {
+        props.job.versioning = true
+    } else {
+        props.job.versioning = Number(props.job.versioning) === 1
+    }
 
     parseCron()
 

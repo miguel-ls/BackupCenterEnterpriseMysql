@@ -406,22 +406,6 @@ public function resetPassword(string $username): array
         ));
     }
 
-    // Sincronizar la nueva contraseña en la tabla connections
-    $db = new Database();
-
-    $pdo = $db->getConnection();
-
-    $stmt = $pdo->prepare("
-        UPDATE connections
-        SET password = ?
-        WHERE username = ?
-    ");
-
-    $stmt->execute([
-        $password,
-        $username
-    ]);
-
     return [
         "username" => $username,
         "password" => $password

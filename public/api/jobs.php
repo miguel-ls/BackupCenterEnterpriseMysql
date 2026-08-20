@@ -135,6 +135,7 @@ switch ($method) {
         */
 
         $enabled = !empty($body['enabled']) ? 1 : 1;
+        $versioning = !array_key_exists('versioning', $body) || !empty($body['versioning']) ? 1 : 0;
 
         $id = $repository->createJob(
 
@@ -149,7 +150,8 @@ switch ($method) {
             $body['destination'] ?? '',
 
             $body['schedule'] ?? '',
-            $enabled
+            $enabled,
+            $versioning
 
         );
 
@@ -186,6 +188,7 @@ switch ($method) {
     case 'PUT':
 
         $enabled = !empty($body['enabled']) ? 1 : 1;
+        $versioning = !array_key_exists('versioning', $body) || !empty($body['versioning']) ? 1 : 0;
 
         $ok = $repository->updateJob(
 
@@ -202,7 +205,8 @@ switch ($method) {
             $body['destination'] ?? '',
 
             $body['schedule'] ?? '',
-            $enabled
+            $enabled,
+            $versioning
 
         );
 

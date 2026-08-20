@@ -171,6 +171,21 @@ class ClientRepository
         ]);
     }
 
+    public function updateSftpPassword(int $id, string $password): bool
+    {
+        $primaryKey = $this->primaryKey();
+
+        $stmt = $this->db->prepare(
+            "UPDATE clients SET sftp_password=? WHERE {$primaryKey}=?"
+        );
+
+        if (!$stmt->execute([$password, $id])) {
+            return false;
+        }
+
+        return $stmt->rowCount() === 1;
+    }
+
     public function delete(int $id): bool
     {
         $primaryKey = $this->primaryKey();
