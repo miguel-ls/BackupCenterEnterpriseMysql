@@ -137,6 +137,9 @@ class MonitorLogService
         $handle = @fopen($file, 'a');
 
         if ($handle === false) {
+            // No se pudo abrir el archivo (permisos, disco, etc.): se deja constancia
+            // en el log de errores de PHP en vez de perder el evento en silencio.
+            error_log("MonitorLogService: no se pudo escribir en {$file} (revisar permisos/propietario del archivo o carpeta)");
             return;
         }
 
