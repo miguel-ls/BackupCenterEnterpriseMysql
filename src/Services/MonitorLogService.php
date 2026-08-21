@@ -11,6 +11,25 @@ use PDO;
  */
 class MonitorLogService
 {
+    // Fija la zona horaria en cada operación: los escritores (worker, cola,
+    // transferencias) y los lectores (monitor.php) deben coincidir siempre,
+    // sin depender del timezone por defecto del servidor (que puede ser UTC).
+    private const TIMEZONE = 'America/Lima';
+
+    private static function today(): string
+    {
+        date_default_timezone_set(self::TIMEZONE);
+
+        return date('Y-m-d');
+    }
+
+    private static function now(): string
+    {
+        date_default_timezone_set(self::TIMEZONE);
+
+        return date('Y-m-d H:i:s');
+    }
+
     public static function directory(): string
     {
         return Paths::logs() . '/monitor';
@@ -23,7 +42,7 @@ class MonitorLogService
 
     public static function todayFile(): string
     {
-        return self::fileForDate(date('Y-m-d'));
+        return self::fileForDate(self::today());
     }
 
     /**
@@ -108,7 +127,7 @@ class MonitorLogService
 
         $line = sprintf(
             '%s | %-9s | %s | %s' . PHP_EOL,
-            date('Y-m-d H:i:s'),
+            self::now(),
             strtoupper($type),
             implode(' ', $parts),
             $message

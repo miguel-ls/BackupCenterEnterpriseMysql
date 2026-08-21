@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use BackupCenter\Core\Auth;
 use BackupCenter\Services\MonitorLogService;
 
+date_default_timezone_set('America/Lima');
+
 Auth::require();
 
 $dir = MonitorLogService::directory();

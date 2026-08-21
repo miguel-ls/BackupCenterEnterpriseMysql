@@ -69,3 +69,10 @@
 2026-08-21 00:16:53 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" job_id="6" job_name="Job Pruebas" queue_id="4047" files_found="7" files_uploaded="0" files_skipped="7" files_failed="0" duration_seconds="2" status="Correcto" | Worker finalizó la petición (estado: Correcto)
 2026-08-21 00:17:03 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Conexión entrante del worker (1 jobs, 0 en cola)
 2026-08-21 00:17:03 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Respuesta de registro enviada, cerrando petición del worker
+2026-08-21 00:50:51 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Conexión entrante del worker (1 jobs, 0 en cola)
+2026-08-21 00:50:51 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Respuesta de registro enviada, cerrando petición del worker
+2026-08-21 00:50:58 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Conexión entrante del worker (1 jobs, 0 en cola)
+2026-08-21 00:50:58 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Respuesta de registro enviada, cerrando petición del worker
+2026-08-21 00:52:22 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Conexión entrante del worker (1 jobs, 0 en cola)
+2026-08-21 00:52:22 | WORKER    | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" jobs="1" queue="0" | Respuesta de registro enviada, cerrando petición del worker
+2026-08-21 00:52:37 | QUEUE     | client_name="Pruebas sac" connection_id="8" connection_name="Cnx Pruebas" job_id="6" job_name="Job Pruebas" | Estado cambiado: -> Pending
