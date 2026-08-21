@@ -11,9 +11,11 @@ use PDO;
 class AgentService
 {
     private AgentRepository $repository;
+    private PDO $pdo;
 
     public function __construct(PDO $pdo)
     {
+        $this->pdo = $pdo;
         $this->repository = new AgentRepository($pdo);
     }
 
@@ -149,6 +151,16 @@ public function register(): void
         $this->repository->getQueuedJobs((int)$connection['id'])
     );
 
+    $monitorContext = MonitorLogService::contextForConnection($this->pdo, (int)$connection['id']);
+    $monitorContext['jobs'] = count($jobs);
+    $monitorContext['queue'] = count($queue);
+
+    MonitorLogService::log(
+        'WORKER',
+        "Conexión entrante del worker ({$monitorContext['jobs']} jobs, {$monitorContext['queue']} en cola)",
+        $monitorContext
+    );
+
     $response = [
 
         'connection' => [
@@ -184,6 +196,12 @@ public function register(): void
         $response['agentToken'] = $agentToken;
     }
 
+    MonitorLogService::log(
+        'WORKER',
+        'Respuesta de registro enviada, cerrando petición del worker',
+        $monitorContext
+    );
+
     ApiResponse::success($response);
 }
 
@@ -214,6 +232,21 @@ public function executionHistory(?int $authenticatedConnectionId = null): void
         }
 
         $this->repository->saveExecutionHistory($data);
+
+        $monitorContext = MonitorLogService::contextForJob($this->pdo, (int)$data['jobId']);
+        $monitorContext['queue_id'] = $data['queueId'] ?? null;
+        $monitorContext['files_found'] = $data['filesFound'] ?? null;
+        $monitorContext['files_uploaded'] = $data['filesUploaded'] ?? null;
+        $monitorContext['files_skipped'] = $data['filesSkipped'] ?? null;
+        $monitorContext['files_failed'] = $data['filesFailed'] ?? null;
+        $monitorContext['duration_seconds'] = $data['durationSeconds'] ?? null;
+        $monitorContext['status'] = $data['status'] ?? null;
+
+        MonitorLogService::log(
+            'WORKER',
+            "Worker finalizó la petición (estado: " . ($data['status'] ?? '-') . ')',
+            $monitorContext
+        );
 
         ApiResponse::success([
             'saved' => true

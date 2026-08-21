@@ -355,6 +355,53 @@ export const getLogs = (
 ) =>
     request(`logs.php?page=${page}&limit=${limit}`);
 
+/* ================= MONITOR ================= */
+
+export const getMonitor = (offset = null) =>
+    request(
+        offset === null
+            ? "monitor.php"
+            : `monitor.php?offset=${offset}`
+    );
+
+export const getMonitorFiles = () =>
+    request("monitor-files.php");
+
+export const deleteMonitorFile = (name) =>
+    request("monitor-files.php", {
+        method: "DELETE",
+        body: JSON.stringify({ file: name })
+    });
+
+export const downloadMonitorFile = async (name) => {
+    const response = await fetch(
+        `${API}/monitor-files.php?action=download&file=${encodeURIComponent(name)}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token()}`
+            }
+        }
+    );
+
+    if (!response.ok) {
+        return false;
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = name;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+
+    return true;
+};
+
 /* ================= NOTIFICATIONS ================= */
 
 export const getNotifications = () =>

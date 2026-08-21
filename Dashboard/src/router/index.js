@@ -6,6 +6,7 @@ import JobsView from '../views/JobsView.vue'
 import ConnectionsView from '../views/ConnectionsView.vue'
 import HistoryView from '../views/HistoryView.vue'
 import LogsView from '../views/LogsView.vue'
+import MonitorView from '../views/MonitorView.vue'
 import SettingsView from '../views/SettingsView.vue'
 import AboutView from '../views/AboutView.vue'
 import QueueView from '../views/QueueView.vue'
@@ -76,6 +77,12 @@ const router = createRouter({
         {
             path: '/logs',
             component: LogsView,
+            meta: { requiresAuth: true }
+        },
+
+        {
+            path: '/monitor',
+            component: MonitorView,
             meta: { requiresAuth: true }
         },
 

@@ -6,6 +6,7 @@ use BackupCenter\Core\AgentAuth;
 use BackupCenter\Core\ApiResponse;
 use BackupCenter\Core\Application;
 use BackupCenter\Repositories\AgentRepository;
+use BackupCenter\Services\MonitorLogService;
 
 header('Content-Type: application/json');
 
@@ -158,6 +159,26 @@ try {
         ':speed'          => $speed,
         ':status'         => $status
     ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | MONITOR EN TIEMPO REAL
+    |--------------------------------------------------------------------------
+    */
+    $progressPercent = ($total > 0) ? round(($uploaded / $total) * 100, 2) : 0;
+
+    $monitorContext = MonitorLogService::contextForJob($pdo, $jobId);
+    $monitorContext['file'] = $fileName;
+    $monitorContext['progress'] = "{$progressPercent}%";
+    $monitorContext['speed'] = round($speed / 1024 / 1024, 2) . 'MB/s';
+
+    if ($status === 'completed') {
+        MonitorLogService::log('TRANSFER', "Subida completada: {$fileName}", $monitorContext);
+    } elseif ($status === 'failed') {
+        MonitorLogService::log('TRANSFER', "Subida fallida: {$fileName}", $monitorContext);
+    } else {
+        MonitorLogService::log('TRANSFER', "Subiendo archivo {$fileName}", $monitorContext);
+    }
 
     /*
     |--------------------------------------------------------------------------

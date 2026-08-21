@@ -198,6 +198,14 @@
 
             </RouterLink>            
 
+            <RouterLink to="/monitor" class="menu">
+
+                <span>🖥️</span>
+
+                <span>Monitor</span>
+
+            </RouterLink>
+
             </div>
 
             <button

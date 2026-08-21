@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BackupCenter\Repositories;
 
+use BackupCenter\Services\MonitorLogService;
 use PDO;
 
 class AgentRepository
@@ -285,6 +286,11 @@ public function saveExecutionHistory(array $data): void
                 ':finished_at' => $finishedAt,
                 ':queue_id' => $data['queueId']
             ]);
+
+            $monitorContext = MonitorLogService::contextForJob($this->pdo, (int)$data['jobId']);
+            $monitorContext['queue_id'] = $data['queueId'];
+
+            MonitorLogService::log('QUEUE', 'Estado cambiado: -> Completed', $monitorContext);
         }
 
         $this->pdo->commit();

@@ -3,6 +3,7 @@
 namespace BackupCenter\Repositories;
 
 use BackupCenter\Core\Database;
+use BackupCenter\Services\MonitorLogService;
 use PDO;
 
 class JobQueueRepository
@@ -71,10 +72,18 @@ class JobQueueRepository
             )
         ");
 
-        return $stmt->execute([
+        $inserted = $stmt->execute([
             $jobId,
             date('Y-m-d H:i:s')
         ]);
+
+        if ($inserted) {
+            $context = $this->getJobContext($jobId);
+
+            MonitorLogService::log('QUEUE', 'Estado cambiado: -> Pending', $context);
+        }
+
+        return $inserted;
     }
 
     public function getNext(): ?array
@@ -108,6 +117,11 @@ class JobQueueRepository
             $worker,
             $id
         ]);
+
+        $context = $this->getQueueContext($id);
+        $context['worker'] = $worker;
+
+        MonitorLogService::log('QUEUE', 'Estado cambiado: Pending -> Running', $context);
     }
 
     public function finish(int $id): void
@@ -124,6 +138,8 @@ class JobQueueRepository
             date('Y-m-d H:i:s'),
             $id
         ]);
+
+        MonitorLogService::log('QUEUE', 'Estado cambiado: Running -> Completed', $this->getQueueContext($id));
     }
 
     public function completePending(int $id): bool
@@ -135,7 +151,13 @@ class JobQueueRepository
             $id
         ]);
 
-        return $stmt->rowCount() > 0;
+        $completed = $stmt->rowCount() > 0;
+
+        if ($completed) {
+            MonitorLogService::log('QUEUE', 'Estado cambiado: Pending -> Completed', $this->getQueueContext($id));
+        }
+
+        return $completed;
     }
 
     public function fail(
@@ -158,6 +180,11 @@ class JobQueueRepository
             $error,
             $id
         ]);
+
+        $context = $this->getQueueContext($id);
+        $context['error'] = $error;
+
+        MonitorLogService::log('QUEUE', 'Estado cambiado: -> Failed', $context);
     }
 
     public function existsPendingOrRunning(int $jobId): bool
@@ -288,5 +315,46 @@ class JobQueueRepository
             FROM job_queue
             WHERE status='Completed'
         ")->fetchColumn();
+    }
+
+    private function getJobContext(int $jobId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                j.id AS job_id,
+                j.name AS job_name,
+                c.id AS connection_id,
+                c.name AS connection_name,
+                COALESCE(cl.business_name, '-') AS client_name
+            FROM jobs j
+            LEFT JOIN connections c ON c.id = j.connection_id
+            LEFT JOIN clients cl ON cl.id = c.client_id
+            WHERE j.id = ?
+        ");
+
+        $stmt->execute([$jobId]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: ['job_id' => $jobId];
+    }
+
+    private function getQueueContext(int $queueId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                j.id AS job_id,
+                j.name AS job_name,
+                c.id AS connection_id,
+                c.name AS connection_name,
+                COALESCE(cl.business_name, '-') AS client_name
+            FROM job_queue q
+            INNER JOIN jobs j ON j.id = q.job_id
+            LEFT JOIN connections c ON c.id = j.connection_id
+            LEFT JOIN clients cl ON cl.id = c.client_id
+            WHERE q.id = ?
+        ");
+
+        $stmt->execute([$queueId]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: ['queue_id' => $queueId];
     }
 }
