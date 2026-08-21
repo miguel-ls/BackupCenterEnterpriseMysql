@@ -33,6 +33,14 @@
 
             </span>
 
+            <input
+                type="date"
+                class="border rounded-lg px-3 py-2 text-sm"
+                :max="todayStr"
+                v-model="selectedDate"
+                @change="onDateChange"
+            />
+
             <button
                 class="px-4 py-2 rounded-lg bg-neutral-700 text-white hover:bg-neutral-800"
                 @click="openFiles"
@@ -57,7 +65,7 @@
 
     <div
         ref="terminal"
-        class="bg-black text-white font-mono text-sm rounded-xl p-4 h-[calc(100vh-13rem)] min-h-[300px] overflow-y-auto whitespace-pre-wrap break-words shadow-inner"
+        class="bg-black text-white font-mono text-sm rounded-xl p-4 h-[calc(100vh-13rem)] min-h-[300px] w-full max-w-full overflow-auto whitespace-pre shadow-inner"
     >
 
         <div
@@ -68,7 +76,7 @@
 
         <div v-if="lines.length === 0" class="text-neutral-500">
 
-            Esperando actividad...
+            {{ isHistorical ? 'Sin registros para la fecha seleccionada.' : 'Esperando actividad...' }}
 
         </div>
 
@@ -207,6 +215,12 @@ const files = ref([]);
 const connected = ref(false);
 
 const terminal = ref(null);
+
+const todayStr = new Date().toISOString().slice(0, 10);
+
+const selectedDate = ref(todayStr);
+
+const isHistorical = ref(false);
 
 let offset = null;
 
@@ -363,18 +377,79 @@ async function poll() {
 
 }
 
-onMounted(() => {
+async function loadHistorical(date) {
+
+    try {
+
+        const response = await getMonitor(null, date);
+
+        connected.value = !!response?.success;
+
+        if (!response?.success) {
+            return;
+        }
+
+        lines.value = response.lines || [];
+
+        scrollToBottom();
+
+    } catch {
+
+        connected.value = false;
+
+    }
+
+}
+
+function startLive() {
+
+    clearScreen();
+
+    offset = null;
+    currentDate = null;
 
     poll();
 
-    timer = setInterval(poll, POLL_INTERVAL);
+    if (!timer) {
+        timer = setInterval(poll, POLL_INTERVAL);
+    }
+
+}
+
+function stopLive() {
+
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
+
+}
+
+function onDateChange() {
+
+    isHistorical.value = selectedDate.value !== todayStr;
+
+    if (isHistorical.value) {
+        stopLive();
+        clearScreen();
+        loadHistorical(selectedDate.value);
+    } else {
+        startLive();
+    }
+
+}
+
+onMounted(() => {
+
+    startLive();
 
 });
 
 onUnmounted(() => {
 
-    clearInterval(timer);
+    stopLive();
 
 });
 
 </script>
+

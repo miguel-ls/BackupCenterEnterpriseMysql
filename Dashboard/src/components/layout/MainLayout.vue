@@ -4,11 +4,11 @@
 
     <Sidebar />
 
-    <div class="flex flex-1 flex-col">
+    <div class="flex flex-1 flex-col min-w-0">
 
         <Topbar />
 
-        <main class="flex-1 overflow-auto p-8">
+        <main class="flex-1 overflow-auto p-8 min-w-0">
 
             <slot />
 

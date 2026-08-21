@@ -11,15 +11,24 @@ date_default_timezone_set('America/Lima');
 Auth::require();
 
 $today = date('Y-m-d');
-$file = MonitorLogService::fileForDate($today);
+
+$requestedDate = (string)($_GET['date'] ?? $today);
+
+if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $requestedDate)) {
+    $requestedDate = $today;
+}
+
+$isHistorical = $requestedDate !== $today;
+$file = MonitorLogService::fileForDate($requestedDate);
 
 $offset = isset($_GET['offset']) ? max(0, (int)$_GET['offset']) : null;
-$maxInitialLines = 1000;
+$maxLines = $isHistorical ? 5000 : 1000;
 
 if (!file_exists($file)) {
     echo json_encode([
         'success' => true,
-        'date' => $today,
+        'date' => $requestedDate,
+        'historical' => $isHistorical,
         'lines' => [],
         'next_offset' => 0
     ]);
@@ -28,19 +37,40 @@ if (!file_exists($file)) {
 
 $size = filesize($file);
 
+// Log de un día anterior: vista estática de solo lectura, sin tail -f.
+if ($isHistorical) {
+
+    $content = file_get_contents($file);
+    $allLines = explode(PHP_EOL, trim($content, PHP_EOL));
+
+    if (count($allLines) > $maxLines) {
+        $allLines = array_slice($allLines, -$maxLines);
+    }
+
+    echo json_encode([
+        'success' => true,
+        'date' => $requestedDate,
+        'historical' => true,
+        'lines' => $allLines,
+        'next_offset' => $size
+    ]);
+    exit;
+}
+
 // Carga inicial (sin offset): solo las últimas N líneas para no sobrecargar el navegador.
 if ($offset === null) {
 
     $content = file_get_contents($file);
     $allLines = explode(PHP_EOL, trim($content, PHP_EOL));
 
-    if (count($allLines) > $maxInitialLines) {
-        $allLines = array_slice($allLines, -$maxInitialLines);
+    if (count($allLines) > $maxLines) {
+        $allLines = array_slice($allLines, -$maxLines);
     }
 
     echo json_encode([
         'success' => true,
-        'date' => $today,
+        'date' => $requestedDate,
+        'historical' => false,
         'lines' => $allLines,
         'next_offset' => $size
     ]);
@@ -51,7 +81,8 @@ if ($offset === null) {
 if ($offset > $size) {
     echo json_encode([
         'success' => true,
-        'date' => $today,
+        'date' => $requestedDate,
+        'historical' => false,
         'lines' => [],
         'next_offset' => 0
     ]);
@@ -62,7 +93,8 @@ if ($offset > $size) {
 if ($offset === $size) {
     echo json_encode([
         'success' => true,
-        'date' => $today,
+        'date' => $requestedDate,
+        'historical' => false,
         'lines' => [],
         'next_offset' => $size
     ]);
@@ -78,6 +110,8 @@ $lines = $new !== '' ? explode(PHP_EOL, trim($new, PHP_EOL)) : [];
 
 echo json_encode([
     'success' => true,
+    'date' => $requestedDate,
+    'historical' => false,
     'date' => $today,
     'lines' => $lines,
     'next_offset' => $size

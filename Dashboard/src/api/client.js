@@ -357,12 +357,21 @@ export const getLogs = (
 
 /* ================= MONITOR ================= */
 
-export const getMonitor = (offset = null) =>
-    request(
-        offset === null
-            ? "monitor.php"
-            : `monitor.php?offset=${offset}`
-    );
+export const getMonitor = (offset = null, date = null) => {
+    const params = new URLSearchParams();
+
+    if (offset !== null) {
+        params.set("offset", String(offset));
+    }
+
+    if (date) {
+        params.set("date", date);
+    }
+
+    const query = params.toString();
+
+    return request(query ? `monitor.php?${query}` : "monitor.php");
+};
 
 export const getMonitorFiles = () =>
     request("monitor-files.php");
